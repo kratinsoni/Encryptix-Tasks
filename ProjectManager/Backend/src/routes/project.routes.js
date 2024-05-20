@@ -1,18 +1,18 @@
-import {Router} from 'express';
+import { Router } from "express";
 import {
   createProject,
   deleteProject,
   getProject,
-  changeProjectStatus,
   getProjectsByUser,
+  updateProject,
 } from "../controllers/project.controller.js";
-import {verifyJWT} from "../middleware/auth.js";
+import { verifyJWT } from "../middlewares/auth.middleware.js";
 
 const router = Router();
-router.use(verifyJWT)
+router.use(verifyJWT);
 
 router.route("/").get(getProjectsByUser);
 router.route("/create").post(createProject);
-router.route("/:id").get(getProject).delete(deleteProject).patch(changeProjectStatus);
+router.route("/:id").get(getProject).delete(deleteProject).patch(updateProject);
 
 export default router;

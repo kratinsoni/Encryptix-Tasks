@@ -1,6 +1,5 @@
 import { asyncHandler } from "../utils/asynchandler.js";
-import { User } from "../models/Sser.model.js";
-import { uploadOnCloudinary } from "../utils/cloudinary.js";
+import { User } from "../models/User.model.js";
 import jwt from "jsonwebtoken";
 import mongoose from "mongoose";
 
@@ -41,29 +40,12 @@ const registerUser = asyncHandler(async (req, res) => {
     throw new Error("User already exists");
   }
 
-  const avatarLocalPath = req.file?.path;
 
-  console.log(req.file?.path);
-
-  if (!avatarLocalPath) {
-    res.status(400);
-    throw new Error("Please provide an avatar");
-  }
-
-  const avatar = await uploadOnCloudinary(avatarLocalPath);
-
-  console.log(avatar);
-
-  if (!avatar) {
-    res.status(500);
-    throw new Error("Couldn't upload avatar");
-  }
 
   const newUser = await User.create({
     fullName,
     email,
-    password,
-    avatar: avatar.url,
+    password
   });
 
   const createdUser = await User.findById(newUser._id).select("-password");
@@ -77,7 +59,6 @@ const registerUser = asyncHandler(async (req, res) => {
     _id: createdUser._id,
     fullName: createdUser.fullName,
     email: createdUser.email,
-    avatar: createdUser.avatar,
   });
 });
 

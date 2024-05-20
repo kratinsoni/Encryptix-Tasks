@@ -18,9 +18,6 @@ const userSchema = new Schema(
       type: String,
       required: [true, "Please provide a password"],
     },
-    avatar: {
-      type: String,
-    },
     projects: [
       {
         type: Schema.Types.ObjectId,

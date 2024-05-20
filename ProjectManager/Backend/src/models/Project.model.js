@@ -1,36 +1,37 @@
-import mongoose from 'mongoose';
-import { Schema } from 'mongoose';
+import mongoose from "mongoose";
+import { Schema } from "mongoose";
 
-const projectSchema = new Schema({
+const projectSchema = new Schema(
+  {
     name: {
-        type: String,
-        required: [true, 'Please provide a project name'],
+      type: String,
+      required: [true, "Please provide a project name"],
     },
     description: {
-        type: String,
-        required: [true, 'Please provide a project description'],
+      type: String,
+      required: [true, "Please provide a project description"],
     },
     projectManager: {
-        type: Schema.Types.ObjectId,
-        ref: 'User',
+      type: Schema.Types.ObjectId,
+      ref: "User",
     },
     teamMembers: [
-        {
-        type: Schema.Types.ObjectId,
-        ref: 'User',
-        },
+      {
+        type: String,
+      },
     ],
     tasks: [
-        {
-        type: Schema.Types.ObjectId,
-        ref: 'Task',
-        },
+      {
+        type: String,
+      },
     ],
     status: {
-        type: String,
-        enum: ['active', 'inactive'],
-        default: 'active',
+      type: String,
+      enum: ["active", "inactive"],
+      default: "active",
     },
-}, { timestamps: true });
+  },
+  { timestamps: true }
+);
 
-export const Project = mongoose.model('Project', projectSchema);
+export const Project = mongoose.model("Project", projectSchema);
